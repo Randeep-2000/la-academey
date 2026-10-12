@@ -212,7 +212,7 @@
                             French, from your first <span class="text-french-gold italic">bonjour</span> to fluent.
                         </h1>
                         <p class="text-slate-200 text-sm sm:text-base font-normal leading-relaxed">
-                            A clear, hands-on path from beginner to advanced. Learn in English, practise every day, and build confidence with guided exercises.
+                            A clear, hands-on path from beginner to advanced. Learn French in English and Hindi, practise every day, and build confidence with guided exercises.
                         </p>
                         <div class="pt-2 flex flex-wrap gap-3">
                             <button onclick="switchView('lessons'); loadLesson('a1-present');" class="bg-french-gold hover:bg-yellow-500 text-french-blue font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-sm flex items-center gap-2">
@@ -510,6 +510,7 @@
                                 </div>
                                 <div class="text-center space-y-3">
                                     <h3 id="fc-english-text" class="font-serif text-2xl font-bold text-french-navy dark:text-french-gold">Hello / Good morning</h3>
+                                    <p id="fc-hindi-text" lang="hi" class="text-lg font-semibold text-slate-700 dark:text-slate-200">नमस्ते / सुप्रभात</p>
                                     <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl text-xs text-slate-600 dark:text-slate-300 italic">
                                         "<span id="fc-example-text">Bonjour! Comment allez-vous aujourd'hui?</span>"
                                     </div>
@@ -1062,13 +1063,25 @@
         };
 
         // Flashcards Database
+        const HINDI_LESSON_NOTES = {
+            "a1-present": "फ्रेंच का वर्तमान काल अभी हो रहे काम, आदतों और सामान्य तथ्यों के लिए प्रयोग होता है। नियमित -ER क्रियाओं के अंत बदलते हैं। être का अर्थ ‘होना’ और avoir का अर्थ ‘पास होना’ है।",
+            "a1-articles": "फ्रेंच में हर संज्ञा पुल्लिंग या स्त्रीलिंग होती है। le/un पुल्लिंग, la/une स्त्रीलिंग, l’ स्वर से पहले और les बहुवचन के लिए आता है।",
+            "a2-passe": "Passé Composé पूरी हो चुकी घटना बताता है। Imparfait अतीत की आदत, पृष्ठभूमि या जारी स्थिति बताता है।",
+            "b2-subjonctif": "Subjonctif इच्छा, संदेह, भावना या आवश्यकता व्यक्त करता है। Il faut que… (यह ज़रूरी है कि…) के बाद आम तौर पर इसका प्रयोग होता है।",
+            "a1-greetings": "Bonjour से नमस्ते या सुप्रभात कहें। Je m’appelle… का अर्थ ‘मेरा नाम… है’ है। Comment vous appelez-vous? का अर्थ ‘आपका नाम क्या है?’ है।",
+            "a1-negation": "नकारात्मक वाक्य में conjugated verb से पहले ne और बाद में pas लगाएँ: Je parle → Je ne parle pas (मैं नहीं बोलता/बोलती)। बोलचाल में ne अक्सर छूट जाता है।",
+            "a2-future": "निकट भविष्य बताने के लिए aller का वर्तमान रूप और उसके बाद infinitive लगाएँ: Je vais étudier का अर्थ ‘मैं पढ़ने वाला/वाली हूँ’ है।",
+            "b1-relative": "Qui relative clause में कर्ता होता है और que कर्म। L’homme qui parle = वह आदमी जो बोलता है; Le livre que je lis = वह किताब जिसे मैं पढ़ता/पढ़ती हूँ।",
+            "b2-conditional": "Conditional विनम्र अनुरोध और काल्पनिक स्थितियों के लिए है। si + imparfait के बाद conditional रखें: Si j’avais le temps, je voyagerais = अगर मेरे पास समय होता, तो मैं यात्रा करता/करती।",
+            "c1-connectors": "औपचारिक connectors विचार जोड़ते हैं, विरोध और रियायत दिखाते हैं, तथा निष्कर्ष प्रस्तुत करते हैं। इन्हें निबंध और प्रस्तुतियों में स्पष्ट तर्क के लिए प्रयोग करें।"
+        };
         const FLASHCARDS = [
-            { id: 1, level: "A1", french: "Bonjour", phonetic: "[bɔ̃ʒuʁ]", english: "Hello / Good morning", example: "Bonjour! Comment allez-vous aujourd'hui?" },
-            { id: 2, level: "A1", french: "S'il vous plaît", phonetic: "[sil vu plɛ]", english: "Please (formal)", example: "Un café s'il vous plaît." },
-            { id: 3, level: "A1", french: "Merci beaucoup", phonetic: "[mɛʁsi boku]", english: "Thank you very much", example: "Merci beaucoup pour votre aide!" },
-            { id: 4, level: "A2", french: "Aujourd'hui", phonetic: "[oʒuʁdɥi]", english: "Today", example: "Aujourd'hui, il fait très beau à Paris." },
-            { id: 5, level: "A2", french: "Délicieux", phonetic: "[delisjø]", english: "Delicious", example: "Ce croissant au beurre est délicieux." },
-            { id: 6, level: "B1", french: "Cependant", phonetic: "[səpɑ̃dɑ̃]", english: "However / Nevertheless", example: "Il pleut, cependant nous nous promenons." }
+            { id: 1, level: "A1", french: "Bonjour", phonetic: "[bɔ̃ʒuʁ]", english: "Hello / Good morning", hindi: "नमस्ते / सुप्रभात", example: "Bonjour! Comment allez-vous aujourd'hui?" },
+            { id: 2, level: "A1", french: "S'il vous plaît", phonetic: "[sil vu plɛ]", english: "Please (formal)", hindi: "कृपया (औपचारिक)", example: "Un café s'il vous plaît." },
+            { id: 3, level: "A1", french: "Merci beaucoup", phonetic: "[mɛʁsi boku]", english: "Thank you very much", hindi: "बहुत धन्यवाद", example: "Merci beaucoup pour votre aide!" },
+            { id: 4, level: "A2", french: "Aujourd'hui", phonetic: "[oʒuʁdɥi]", english: "Today", hindi: "आज", example: "Aujourd'hui, il fait très beau à Paris." },
+            { id: 5, level: "A2", french: "Délicieux", phonetic: "[delisjø]", english: "Delicious", hindi: "स्वादिष्ट", example: "Ce croissant au beurre est délicieux." },
+            { id: 6, level: "B1", french: "Cependant", phonetic: "[səpɑ̃dɑ̃]", english: "However / Nevertheless", hindi: "हालाँकि / फिर भी", example: "Il pleut, cependant nous nous promenons." }
         ];
 
         // Quiz Questions Database
@@ -1187,6 +1200,9 @@
                 </div>
                 <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                     <strong>Résumé de la leçon :</strong> ${lesson.summary}
+                </div>
+                <div lang="hi" class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 text-sm text-slate-700 dark:text-amber-100 leading-relaxed">
+                    <strong>हिन्दी में समझें:</strong> ${HINDI_LESSON_NOTES[lesson.id]}
                 </div>
                 ${lesson.contentHtml}
             `;
@@ -1337,6 +1353,7 @@
             document.getElementById('fc-french-text').innerText = card.french;
             document.getElementById('fc-phonetic-text').innerText = card.phonetic;
             document.getElementById('fc-english-text').innerText = card.english;
+            document.getElementById('fc-hindi-text').innerText = card.hindi;
             document.getElementById('fc-example-text').innerText = card.example;
 
             // Reset flip position
