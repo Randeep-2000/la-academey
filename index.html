@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Académie du Français - Apprendre le Français en Ligne</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        french: {
+                            blue: '#051C2C',
+                            navy: '#0B2545',
+                            gold: '#D4AF37',
+                            goldlight: '#F4E8C1',
+                            red: '#C8102E',
+                            cream: '#FAF9F6',
+                            carddark: '#132238'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root { color-scheme: light; }
+        html { scroll-behavior: smooth; }
+        body { background-color: #f7f5f0; }
+        button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
+        button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px solid #d4af37; outline-offset: 3px; }
+        .lesson-prose { line-height: 1.8; }
+        .ai-message { animation: rise-in .22s ease-out both; }
+        @keyframes rise-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+        /* Card Flip Styles */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+
+        /* Wallpaper Overlays */
+        .bg-paris-hero {
+            background-image: linear-gradient(rgba(5, 28, 44, 0.82), rgba(11, 37, 69, 0.92)), url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .bg-louvre-card {
+            background-image: linear-gradient(rgba(5, 28, 44, 0.85), rgba(5, 28, 44, 0.85)), url('https://images.unsplash.com/photo-1499856871958-5b9627545d1a?q=80&w=800&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        @media print {
+            body * { visibility: hidden; }
+            #printable-certificate, #printable-certificate * { visibility: visible; }
+            #printable-certificate { position: absolute; left: 0; top: 0; width: 100%; height: 100%; margin: 0; padding: 20px; }
+        }
+    </style>
+</head>
+<body class="bg-french-cream dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-french-blue text-white shadow-md border-b border-french-gold/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand Logo & Mobile Toggle -->
+                <div class="flex items-center space-x-3">
+                    <button id="mobile-sidebar-toggle" class="md:hidden text-slate-300 hover:text-white p-2 rounded-lg" aria-label="Toggle Navigation">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                    <a href="#" onclick="switchView('home')" class="flex items-center space-x-3 group">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-french-red via-white to-french-blue p-0.5 shadow-lg group-hover:scale-105 transition-transform">
+                            <div class="w-full h-full bg-french-navy rounded-full flex items-center justify-center border border-french-gold/50">
+                                <span class="font-serif font-bold text-french-gold text-lg">A</span>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="font-serif font-bold text-lg sm:text-xl tracking-tight text-white block leading-none">L'Académie <span class="text-french-gold italic">du Français</span></span>
+                            <span class="text-[10px] text-slate-400 font-medium tracking-widest uppercase">Éducation Supérieure</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Central Search Bar (W3Schools style) -->
+                <div class="hidden sm:flex flex-1 max-w-xs md:max-w-md mx-4 relative">
+                    <div class="relative w-full">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input type="text" id="global-search" oninput="handleSearch(this.value)" placeholder="Search French rules, verbs, grammar..." 
+                               class="w-full pl-9 pr-4 py-1.5 text-sm bg-slate-800/80 border border-slate-700 text-white placeholder-slate-400 rounded-full focus:outline-none focus:border-french-gold focus:ring-1 focus:ring-french-gold transition-all">
+                        <div id="search-results-dropdown" class="hidden absolute left-0 right-0 top-full mt-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-2xl overflow-hidden z-50 max-h-80 overflow-y-auto"></div>
+                    </div>
+                </div>
+
+                <!-- Top Nav Actions & User Profile -->
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <button id="theme-toggle" onclick="toggleDarkMode()" class="p-2 text-slate-300 hover:text-french-gold rounded-full hover:bg-slate-800/50 transition-colors" title="Toggle Theme">
+                        <i class="fa-solid fa-moon text-lg dark:hidden"></i>
+                        <i class="fa-solid fa-sun text-lg hidden dark:block text-french-gold"></i>
+                    </button>
+                    
+                    <button onclick="switchView('playground')" class="hidden md:flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider bg-french-gold/20 text-french-gold border border-french-gold/40 px-3 py-1.5 rounded-lg hover:bg-french-gold/30 transition-colors">
+                        <i class="fa-solid fa-terminal"></i>
+                        <span>Try Editor</span>
+                    </button>
+
+                    <!-- User Account / Auth Button -->
+                    <div id="auth-container" class="relative">
+                        <button id="user-menu-btn" onclick="openAuthModal()" class="flex items-center space-x-2 bg-french-navy hover:bg-slate-800 border border-french-gold/30 text-white px-3 py-1.5 rounded-full text-sm font-medium transition-colors">
+                            <i class="fa-regular fa-user text-french-gold"></i>
+                            <span id="user-display-name">Connexion</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secondary W3Schools Tab Navigation Bar -->
+        <nav class="bg-french-navy border-t border-slate-800 overflow-x-auto text-xs sm:text-sm font-medium no-scrollbar">
+            <div class="max-w-7xl mx-auto px-4 flex space-x-1 sm:space-x-2 py-1 whitespace-nowrap">
+                <button onclick="switchView('home')" class="nav-tab px-3 py-1.5 rounded-md hover:bg-slate-800 text-slate-300 hover:text-white transition-colors active-tab" data-tab="home">
+                    <i class="fa-solid fa-house mr-1"></i> Accueil
+                </button>
+                <button onclick="switchView('lessons')" class="nav-tab px-3 py-1.5 rounded-md hover:bg-slate-800 text-slate-300 hover:text-white transition-colors" data-tab="lessons">
+                    <i class="fa-solid fa-book-open mr-1"></i> Cours & Leçons
+                </button>
+                <button onclick="switchView('grammar')" class="nav-tab px-3 py-1.5 rounded-md hover:bg-slate-800 text-slate-300 hover:text-white transition-colors" data-tab="grammar">
+                    <i class="fa-solid fa-spell-check mr-1"></i> Grammaire
+                </button>
+                <button onclick="switchView('flashcards')" class="nav-tab px-3 py-1.5 rounded-md hover:bg-slate-800 text-slate-300 hover:text-white transition-colors" data-tab="flashcards">
+                    <i class="fa-solid fa-layer-group mr-1"></i> Vocabulaire & Cards
+                </button>
+                <button onclick="switchView('playground')" class="nav-tab px-3 py-1.5 rounded-md hover:bg-slate-800 text-slate-300 hover:text-white transition-colors" data-tab="playground">
+                    <i class="fa-solid fa-code mr-1"></i> Try It Yourself!
+                </button>
+                <button onclick="switchView('quizzes')" class="nav-tab px-3 py-1.5 rounded-md hover:bg-slate-800 text-slate-300 hover:text-white transition-colors" data-tab="quizzes">
+                    <i class="fa-solid fa-circle-question mr-1"></i> Quiz & Évaluations
+                </button>
+                <button onclick="switchView('pronunciation')" class="nav-tab px-3 py-1.5 rounded-md hover:bg-slate-800 text-slate-300 hover:text-white transition-colors" data-tab="pronunciation">
+                    <i class="fa-solid fa-volume-high mr-1"></i> Prononciation
+                </button>
+                <button onclick="switchView('ai-coach')" class="nav-tab px-3 py-1.5 rounded-md hover:bg-slate-800 text-slate-300 hover:text-white transition-colors" data-tab="ai-coach">
+                    <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> AI Coach
+                </button>
+                <button onclick="switchView('certificates')" class="nav-tab px-3 py-1.5 rounded-md hover:bg-slate-800 text-french-gold hover:text-french-goldlight transition-colors" data-tab="certificates">
+                    <i class="fa-solid fa-award mr-1"></i> Certificats
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Application Wrapper -->
+    <div class="flex-1 flex max-w-7xl w-full mx-auto px-0 sm:px-4 lg:px-8 py-0 sm:py-6 gap-6">
+
+        <!-- W3Schools Style Sidebar Navigation (Collapsible on Mobile) -->
+        <aside id="app-sidebar" class="fixed inset-y-0 left-0 z-30 w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 transform -translate-x-full md:translate-x-0 md:static md:w-64 md:rounded-2xl md:shadow-sm md:border transition-transform duration-200 ease-in-out flex flex-col overflow-hidden">
+            <div class="p-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 flex items-center justify-between">
+                <span class="font-serif font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-graduation-cap text-french-gold"></i> Curriculum
+                </span>
+                <span id="user-streak-badge" class="text-xs bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 px-2 py-0.5 rounded-full font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-fire text-amber-500"></i> <span id="streak-count">0</span> jours
+                </span>
+            </div>
+
+            <!-- Sidebar Level Tabs & Accordion list -->
+            <div class="flex-1 overflow-y-auto p-3 space-y-4 text-sm" id="sidebar-nav-content">
+                <!-- Javascript will populate dynamic navigation items here -->
+            </div>
+
+            <!-- Quick Progress Stats Footer -->
+            <div class="p-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 text-xs">
+                <div class="flex justify-between font-semibold mb-1">
+                    <span class="text-slate-600 dark:text-slate-400">Progression globale</span>
+                    <span id="overall-progress-percent" class="text-french-gold font-bold">0%</span>
+                </div>
+                <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
+                    <div id="overall-progress-bar" class="bg-gradient-to-r from-french-gold to-amber-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Dynamic Content Container -->
+        <main class="flex-1 min-w-0 bg-white dark:bg-slate-800 sm:rounded-2xl border-0 sm:border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden flex flex-col">
+            
+            <section id="view-home" class="view-panel space-y-8 p-4 sm:p-8">
+                <!-- French Aesthetic Hero Section -->
+                <div class="relative rounded-2xl bg-paris-hero text-white p-6 sm:p-10 overflow-hidden shadow-xl border border-french-gold/30">
+                    <div class="relative z-10 max-w-2xl space-y-4">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-french-gold/20 text-french-gold border border-french-gold/40">
+                            <i class="fa-solid fa-star"></i> Méthode Interactive & Structurée
+                        </span>
+                        <h1 class="font-serif text-3xl sm:text-5xl font-bold leading-tight">
+                            French, from your first <span class="text-french-gold italic">bonjour</span> to fluent.
+                        </h1>
+                        <p class="text-slate-200 text-sm sm:text-base font-normal leading-relaxed">
+                            A clear, hands-on path from beginner to advanced. Learn in English or Hindi, practise every day, and get unstuck with your AI tutor.
+                        </p>
+                        <div class="pt-2 flex flex-wrap gap-3">
+                            <button onclick="switchView('lessons'); loadLesson('a1-present');" class="bg-french-gold hover:bg-yellow-500 text-french-blue font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-play"></i> Start learning
+                            </button>
+                            <button onclick="switchView('ai-coach')" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-5 py-3 rounded-xl backdrop-blur-md border border-white/20 transition-all text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Ask the AI coach
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Summary Row -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-200 dark:border-slate-700 flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/50 text-french-navy dark:text-blue-300 flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold font-serif" id="stat-completed-lessons">0</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Leçons terminées</div>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-200 dark:border-slate-700 flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-lg bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold font-serif" id="stat-cards-mastered">0</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Mots maîtrisés</div>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-200 dark:border-slate-700 flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold font-serif" id="stat-quiz-score">0%</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Moyenne aux Quiz</div>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-200 dark:border-slate-700 flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold font-serif" id="stat-certificates">0</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Certificats obtenus</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learning Modules Grid -->
+                <div>
+                    <h2 class="font-serif text-2xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-compass text-french-gold"></i> Parcours de Formation
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Module Card A1 -->
+                        <div class="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow group flex flex-col">
+                            <div class="p-5 border-b border-slate-100 dark:border-slate-700/60 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-800">
+                                <span class="px-2.5 py-1 text-xs font-bold rounded-md bg-french-blue text-white">Niveau A1</span>
+                                <h3 class="font-serif text-xl font-bold mt-2 group-hover:text-french-gold transition-colors">Débutant Fondateur</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Les bases essentielles : salutations, verbes 'être' & 'avoir', articles.</p>
+                            </div>
+                            <div class="p-5 space-y-3 flex-1 flex flex-col justify-between">
+                                <ul class="text-xs text-slate-600 dark:text-slate-300 space-y-2">
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Le Présent de l'Indicatif</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Les Articles Définis & Indéfinis</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Vocabulaire de la Vie Quotidienne</li>
+                                </ul>
+                                <button onclick="switchView('lessons'); loadLesson('a1-present');" class="w-full mt-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-french-navy hover:text-white dark:hover:bg-french-navy font-semibold text-xs rounded-lg transition-colors flex items-center justify-center gap-2">
+                                    <span>Explorer le niveau A1</span> <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Module Card A2/B1 -->
+                        <div class="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow group flex flex-col">
+                            <div class="p-5 border-b border-slate-100 dark:border-slate-700/60 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-slate-800 dark:to-slate-800">
+                                <span class="px-2.5 py-1 text-xs font-bold rounded-md bg-french-gold text-french-blue">Niveau A2 - B1</span>
+                                <h3 class="font-serif text-xl font-bold mt-2 group-hover:text-french-gold transition-colors">Intermédiaire</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Exprimez-vous au passé, au futur et nuancez vos propos.</p>
+                            </div>
+                            <div class="p-5 space-y-3 flex-1 flex flex-col justify-between">
+                                <ul class="text-xs text-slate-600 dark:text-slate-300 space-y-2">
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Passé Composé vs Imparfait</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Le Futur Simple & Conditionnel</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Pronoms COD et COI</li>
+                                </ul>
+                                <button onclick="switchView('lessons'); loadLesson('a2-passe');" class="w-full mt-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-french-navy hover:text-white dark:hover:bg-french-navy font-semibold text-xs rounded-lg transition-colors flex items-center justify-center gap-2">
+                                    <span>Explorer le niveau A2-B1</span> <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Module Card B2/C1 -->
+                        <div class="rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow group flex flex-col">
+                            <div class="p-5 border-b border-slate-100 dark:border-slate-700/60 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-slate-800 dark:to-slate-800">
+                                <span class="px-2.5 py-1 text-xs font-bold rounded-md bg-purple-900 text-purple-100">Niveau B2 - C1</span>
+                                <h3 class="font-serif text-xl font-bold mt-2 group-hover:text-french-gold transition-colors">Avancé & Littéraire</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Maîtrisez le Subjonctif, le style soutenu et la littérature.</p>
+                            </div>
+                            <div class="p-5 space-y-3 flex-1 flex flex-col justify-between">
+                                <ul class="text-xs text-slate-600 dark:text-slate-300 space-y-2">
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Le Subjonctif Présent & Passé</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Figures de Style & Subtilités</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> Registre Formel & Rédaction</li>
+                                </ul>
+                                <button onclick="switchView('lessons'); loadLesson('b2-subjonctif');" class="w-full mt-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-french-navy hover:text-white dark:hover:bg-french-navy font-semibold text-xs rounded-lg transition-colors flex items-center justify-center gap-2">
+                                    <span>Explorer le niveau Avancé</span> <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Parisian French Culture Feature Card -->
+                <div class="rounded-2xl bg-louvre-card text-white p-6 sm:p-8 border border-french-gold/30 shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="space-y-2 max-w-xl">
+                        <span class="text-xs font-bold uppercase tracking-widest text-french-gold flex items-center gap-1.5">
+                            <i class="fa-solid fa-quote-left"></i> Citation du jour
+                        </span>
+                        <blockquote class="font-serif italic text-xl sm:text-2xl text-slate-100">
+                            "Le monde est un livre et ceux qui ne voyagent pas n'en lisent qu'une page."
+                        </blockquote>
+                        <p class="text-xs text-slate-300 font-medium">— Saint Augustin</p>
+                    </div>
+                    <button onclick="speakText('Le monde est un livre et ceux qui ne voyagent pas n\'en lisent qu\'une page.')" class="px-5 py-3 rounded-xl bg-french-gold text-french-blue font-bold text-sm hover:bg-yellow-400 transition-colors flex items-center gap-2 shrink-0">
+                        <i class="fa-solid fa-volume-high"></i> Écouter la citation
+                    </button>
+                </div>
+            </section>
+
+            <section id="view-lessons" class="view-panel hidden p-4 sm:p-8 space-y-6">
+                <!-- Lesson Top Breadcrumb & Actions -->
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-700 pb-4">
+                    <div class="flex items-center space-x-2 text-xs text-slate-500 dark:text-slate-400">
+                        <span id="lesson-level-badge" class="px-2 py-0.5 rounded font-bold bg-french-navy text-white">A1</span>
+                        <span>/</span>
+                        <span id="lesson-category-text">Grammaire</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button id="bookmark-btn" onclick="toggleBookmarkCurrentLesson()" class="p-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:text-french-gold text-sm transition-colors" title="Bookmark lesson">
+                            <i class="fa-regular fa-bookmark"></i>
+                        </button>
+                        <button onclick="switchView('playground')" class="bg-french-navy hover:bg-slate-800 text-white text-xs font-medium px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-colors">
+                            <i class="fa-solid fa-code text-french-gold"></i> Test in Playground
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Lesson Dynamic Container -->
+                <article id="lesson-body" class="space-y-6">
+                    <!-- Dynamic lesson content injected here -->
+                </article>
+
+                <!-- W3Schools Style Next/Prev Navigation -->
+                <div class="flex items-center justify-between pt-6 border-t border-slate-200 dark:border-slate-700">
+                    <button id="prev-lesson-btn" onclick="navigateLesson(-1)" class="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 text-xs font-semibold flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i> Précédent
+                    </button>
+                    <button id="complete-lesson-btn" onclick="markLessonComplete()" class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center gap-2 transition-colors">
+                        <i class="fa-solid fa-check"></i> Marquer comme Terminé
+                    </button>
+                    <button id="next-lesson-btn" onclick="navigateLesson(1)" class="px-4 py-2 rounded-lg bg-french-navy hover:bg-slate-800 text-white text-xs font-semibold flex items-center gap-2 transition-colors">
+                        Suivant <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <section id="view-playground" class="view-panel hidden p-4 sm:p-8 space-y-6">
+                <div>
+                    <h2 class="font-serif text-2xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-terminal text-french-gold"></i> French Interactive Playground
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                        Translate sentences, conjugate verbs, or type custom French phrases to evaluate grammar and listen to pronunciation.
+                    </p>
+                </div>
+
+                <!-- Interactive Playground Interface -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Input / Editor Box -->
+                    <div class="flex flex-col rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm bg-slate-900 text-slate-100">
+                        <div class="bg-slate-800 px-4 py-2 border-b border-slate-700 flex items-center justify-between">
+                            <span class="text-xs font-mono text-slate-300 flex items-center gap-2">
+                                <i class="fa-solid fa-pen-to-square text-french-gold"></i> Votre Texte / Exercice
+                            </span>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="insertSpecialChar('é')" class="px-1.5 py-0.5 text-xs bg-slate-700 rounded hover:bg-slate-600">é</button>
+                                <button onclick="insertSpecialChar('è')" class="px-1.5 py-0.5 text-xs bg-slate-700 rounded hover:bg-slate-600">è</button>
+                                <button onclick="insertSpecialChar('à')" class="px-1.5 py-0.5 text-xs bg-slate-700 rounded hover:bg-slate-600">à</button>
+                                <button onclick="insertSpecialChar('ç')" class="px-1.5 py-0.5 text-xs bg-slate-700 rounded hover:bg-slate-600">ç</button>
+                                <button onclick="insertSpecialChar('ê')" class="px-1.5 py-0.5 text-xs bg-slate-700 rounded hover:bg-slate-600">ê</button>
+                            </div>
+                        </div>
+
+                        <div class="p-4 flex-1">
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Sélectionner un Prompt d'Exercice :</label>
+                            <select id="playground-prompt-select" onchange="loadPlaygroundPrompt()" class="w-full mb-3 bg-slate-800 border border-slate-700 rounded-lg text-xs p-2 text-white focus:outline-none focus:border-french-gold">
+                                <option value="1">Traduire : "I am learning French at the academy."</option>
+                                <option value="2">Conjuguer : Verb 'Avoir' in present (All pronouns)</option>
+                                <option value="3">Corriger : "Je suis aller au café hier soir."</option>
+                                <option value="custom">Saisie Libre (Custom Phrase)</option>
+                            </select>
+
+                            <textarea id="playground-input" rows="7" placeholder="Saisissez votre phrase en français ici..." class="w-full bg-slate-950 text-emerald-400 font-mono text-sm p-3 rounded-lg border border-slate-800 focus:outline-none focus:border-french-gold resize-none leading-relaxed"></textarea>
+                        </div>
+
+                        <div class="p-3 bg-slate-800 border-t border-slate-700 flex items-center justify-between">
+                            <button onclick="clearPlayground()" class="text-xs text-slate-400 hover:text-white px-3 py-1.5 rounded hover:bg-slate-700">
+                                <i class="fa-solid fa-rotate-left"></i> Réinitialiser
+                            </button>
+                            <button onclick="evaluatePlayground()" class="bg-french-gold hover:bg-yellow-500 text-french-blue font-bold px-4 py-1.5 rounded-lg text-xs flex items-center gap-2 transition-colors">
+                                <i class="fa-solid fa-play"></i> Tester & Vérifier
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Output & Feedback Panel -->
+                    <div class="flex flex-col rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm bg-slate-50 dark:bg-slate-900/60 p-5 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-3">
+                            <span class="font-serif font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                                <i class="fa-solid fa-square-poll-vertical text-french-gold"></i> Analyse & Prononciation
+                            </span>
+                            <button id="speak-playground-btn" onclick="speakPlaygroundText()" class="px-3 py-1.5 rounded-lg bg-french-navy text-white text-xs font-medium hover:bg-slate-800 flex items-center gap-1.5 transition-colors">
+                                <i class="fa-solid fa-volume-high text-french-gold"></i> Écouter
+                            </button>
+                        </div>
+
+                        <div id="playground-feedback" class="space-y-3 flex-1 flex flex-col justify-center text-center p-4">
+                            <i class="fa-solid fa-lightbulb text-3xl text-amber-400 mb-2"></i>
+                            <p class="text-sm font-medium text-slate-600 dark:text-slate-300">
+                                Cliquez sur <span class="font-bold text-french-navy dark:text-french-gold">"Tester & Vérifier"</span> pour analyser la grammaire de votre texte et écouter la prononciation audio française !
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="view-flashcards" class="view-panel hidden p-4 sm:p-8 space-y-6">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                        <h2 class="font-serif text-2xl font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-layer-group text-french-gold"></i> Flashcards & Repétition Espacée
+                        </h2>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Cliquez sur la carte pour révéler la traduction et écouter la prononciation.</p>
+                    </div>
+
+                    <!-- Level Selector for Flashcards -->
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs font-semibold text-slate-500">Filtrer :</span>
+                        <select id="flashcard-level-filter" onchange="filterFlashcards(this.value)" class="bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-xs font-semibold rounded-lg px-3 py-1.5 focus:outline-none">
+                            <option value="all">Tous les niveaux</option>
+                            <option value="A1">Niveau A1 (Débutant)</option>
+                            <option value="A2">Niveau A2 (Élémentaire)</option>
+                            <option value="B1">Niveau B1 (Intermédiaire)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Dynamic Flashcard Display -->
+                <div class="max-w-xl mx-auto space-y-6">
+                    <!-- Progress bar -->
+                    <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+                        <span>Carte <span id="fc-current-index">1</span> sur <span id="fc-total-count">10</span></span>
+                        <span>Maîtrisés : <span id="fc-mastered-count" class="text-emerald-600 dark:text-emerald-400 font-bold">0</span></span>
+                    </div>
+
+                    <!-- Flip Card Box -->
+                    <div id="flashcard-container" onclick="flipFlashcard()" class="w-full h-72 perspective-1000 cursor-pointer group">
+                        <div id="flashcard-inner" class="relative w-full h-full rounded-2xl shadow-xl transition-transform duration-500 transform-style-3d border border-french-gold/30">
+                            
+                            <!-- Front Side (French) -->
+                            <div class="absolute inset-0 w-full h-full rounded-2xl bg-gradient-to-br from-french-blue to-french-navy text-white p-8 flex flex-col justify-between backface-hidden">
+                                <div class="flex justify-between items-center">
+                                    <span id="fc-badge-level" class="px-2.5 py-1 text-xs font-bold rounded-md bg-french-gold text-french-blue">A1</span>
+                                    <button onclick="event.stopPropagation(); speakText(document.getElementById('fc-french-text').innerText);" class="p-2 rounded-full hover:bg-white/10 text-french-gold" title="Listen Audio">
+                                        <i class="fa-solid fa-volume-high text-lg"></i>
+                                    </button>
+                                </div>
+                                <div class="text-center space-y-2">
+                                    <h3 id="fc-french-text" class="font-serif text-3xl sm:text-4xl font-bold tracking-wide">Bonjour</h3>
+                                    <p id="fc-phonetic-text" class="text-xs text-slate-300 italic font-mono">[bɔ̃ʒuʁ]</p>
+                                </div>
+                                <div class="text-center text-xs text-slate-400 flex items-center justify-center gap-1">
+                                    <i class="fa-solid fa-rotate"></i> Cliquez pour retourner la carte
+                                </div>
+                            </div>
+
+                            <!-- Back Side (English Translation & Context) -->
+                            <div class="absolute inset-0 w-full h-full rounded-2xl bg-white dark:bg-slate-800 text-slate-800 dark:text-white p-8 flex flex-col justify-between backface-hidden rotate-y-180 border border-slate-200 dark:border-slate-700">
+                                <div class="flex justify-between items-center text-xs text-slate-400">
+                                    <span>Traduction & Exemple</span>
+                                    <i class="fa-solid fa-lightbulb text-french-gold"></i>
+                                </div>
+                                <div class="text-center space-y-3">
+                                    <h3 id="fc-english-text" class="font-serif text-2xl font-bold text-french-navy dark:text-french-gold">Hello / Good morning</h3>
+                                    <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl text-xs text-slate-600 dark:text-slate-300 italic">
+                                        "<span id="fc-example-text">Bonjour! Comment allez-vous aujourd'hui?</span>"
+                                    </div>
+                                </div>
+                                <div class="flex justify-center space-x-3 text-xs">
+                                    <button onclick="event.stopPropagation(); markFlashcardMastery(false);" class="px-4 py-2 rounded-lg bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300 font-semibold hover:bg-red-200">
+                                        À réviser <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                    <button onclick="event.stopPropagation(); markFlashcardMastery(true);" class="px-4 py-2 rounded-lg bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 font-semibold hover:bg-emerald-200">
+                                        Maîtrisé <i class="fa-solid fa-check"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flashcard Deck Controls -->
+                    <div class="flex items-center justify-between">
+                        <button onclick="prevFlashcard()" class="px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold hover:bg-slate-200">
+                            <i class="fa-solid fa-arrow-left"></i> Carte précédente
+                        </button>
+                        <button onclick="shuffleFlashcards()" class="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+                            <i class="fa-solid fa-shuffle"></i> Mélanger
+                        </button>
+                        <button onclick="nextFlashcard()" class="px-4 py-2 rounded-lg bg-french-navy text-white text-xs font-semibold hover:bg-slate-800">
+                            Carte suivante <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="view-quizzes" class="view-panel hidden p-4 sm:p-8 space-y-6">
+                <div>
+                    <h2 class="font-serif text-2xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-circle-question text-french-gold"></i> Quiz & Évaluations de Connaissances
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Testez vos compétences avec feedback immédiat et explications détaillées.</p>
+                </div>
+
+                <!-- Quiz Mode Selector -->
+                <div id="quiz-selection-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-6 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm flex flex-col justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">Quick Test</span>
+                            <h3 class="font-serif text-xl font-bold">Quiz Rapide (3 Questions)</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Idéal pour une révision rapide de 2 minutes sur les verbes et le vocabulaire basique.</p>
+                        </div>
+                        <button onclick="startQuiz('quick')" class="w-full py-2.5 bg-french-navy text-white text-xs font-bold rounded-xl hover:bg-slate-800 transition-colors">
+                            Lancer le Quiz Rapide
+                        </button>
+                    </div>
+
+                    <div class="p-6 rounded-2xl border border-french-gold/40 bg-slate-50 dark:bg-slate-800/80 shadow-sm flex flex-col justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="px-2.5 py-1 text-xs font-bold rounded bg-french-gold text-french-blue">Full Assessment</span>
+                            <h3 class="font-serif text-xl font-bold">Évaluation Complète (10 Questions)</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Examen complet couvrant la grammaire A1/A2, le vocabulaire et la syntaxe pour valider votre niveau.</p>
+                        </div>
+                        <button onclick="startQuiz('full')" class="w-full py-2.5 bg-french-gold text-french-blue font-bold text-xs rounded-xl hover:bg-yellow-500 transition-colors">
+                            Lancer l'Évaluation Complete
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Active Quiz Container (Hidden initially) -->
+                <div id="quiz-active-container" class="hidden max-w-2xl mx-auto space-y-6">
+                    <!-- Progress Bar -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-xs font-semibold">
+                            <span id="quiz-progress-text">Question 1 sur 10</span>
+                            <span id="quiz-score-live" class="text-french-gold">Score: 0</span>
+                        </div>
+                        <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                            <div id="quiz-progress-bar" class="bg-french-gold h-2 rounded-full transition-all duration-300" style="width: 10%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Question Card -->
+                    <div class="p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-md space-y-6">
+                        <h3 id="quiz-question-title" class="font-serif text-xl sm:text-2xl font-bold leading-relaxed">
+                            Loading Question...
+                        </h3>
+
+                        <!-- Answer Options -->
+                        <div id="quiz-options-container" class="space-y-3">
+                            <!-- Injected dynamically -->
+                        </div>
+
+                        <!-- Feedback Explanation Box (hidden until answered) -->
+                        <div id="quiz-explanation-box" class="hidden p-4 rounded-xl text-xs space-y-2 border"></div>
+
+                        <div class="flex justify-end pt-2">
+                            <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden px-5 py-2.5 rounded-xl bg-french-navy text-white text-xs font-bold hover:bg-slate-800 transition-colors">
+                                Question Suivante <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Summary / Result View -->
+                <div id="quiz-result-container" class="hidden max-w-lg mx-auto text-center space-y-6 p-8 rounded-2xl border border-french-gold/30 bg-white dark:bg-slate-800 shadow-xl">
+                    <div class="w-20 h-20 mx-auto rounded-full bg-french-gold/20 flex items-center justify-center text-french-gold text-3xl font-serif font-bold">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="font-serif text-2xl font-bold">Quiz Terminé !</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Voici votre score final pour cette session :</p>
+                    </div>
+                    <div class="text-4xl font-serif font-bold text-french-gold" id="quiz-final-score">
+                        8 / 10
+                    </div>
+                    <p id="quiz-feedback-msg" class="text-xs font-medium text-slate-600 dark:text-slate-300">
+                        Félicitations ! Vous avez une très bonne maîtrise des règles de base.
+                    </p>
+                    <div class="flex justify-center gap-3 pt-4">
+                        <button onclick="switchView('quizzes')" class="px-4 py-2 rounded-lg bg-slate-200 dark:bg-slate-700 text-xs font-semibold">
+                            Refaire un Quiz
+                        </button>
+                        <button onclick="switchView('certificates')" class="px-4 py-2 rounded-lg bg-french-navy text-white text-xs font-semibold hover:bg-slate-800">
+                            Voir mes Certificats
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="view-pronunciation" class="view-panel hidden p-4 sm:p-8 space-y-6">
+                <div>
+                    <h2 class="font-serif text-2xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-volume-high text-french-gold"></i> Atelier de Prononciation & Phonétique
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Écoutez et répétez la prononciation authentique avec synthèse vocale native.</p>
+                </div>
+
+                <!-- Speech Voice Settings Control Bar -->
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-200 dark:border-slate-700 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                    <div>
+                        <label class="block font-semibold mb-1 text-slate-600 dark:text-slate-300">Vitesse de lecture :</label>
+                        <input type="range" id="speech-rate" min="0.5" max="1.2" step="0.1" value="0.9" class="w-full accent-french-gold">
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1 text-slate-600 dark:text-slate-300">Hauteur de voix (Pitch) :</label>
+                        <input type="range" id="speech-pitch" min="0.8" max="1.2" step="0.1" value="1.0" class="w-full accent-french-gold">
+                    </div>
+                    <div class="flex items-end">
+                        <button onclick="testAudioSettings()" class="w-full py-2 bg-french-navy text-white rounded-lg font-semibold hover:bg-slate-800">
+                            Tester les réglages audio
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sound Pairs & Nasal Sounds Practice Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Nasal Vowels Block -->
+                    <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-700 space-y-4">
+                        <h3 class="font-serif font-bold text-lg text-french-navy dark:text-french-gold flex items-center gap-2">
+                            <i class="fa-solid fa-music"></i> Les Voyelles Nasales
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-sm block">1. Son [ɑ̃] (an / en)</span>
+                                    <span class="text-xs text-slate-500">Exemple : La France, le temps</span>
+                                </div>
+                                <button onclick="speakText('La France et le temps')" class="px-3 py-1.5 bg-french-gold text-french-blue font-bold rounded-md text-xs hover:bg-yellow-400">
+                                    <i class="fa-solid fa-volume-high"></i> Écouter
+                                </button>
+                            </div>
+
+                            <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-sm block">2. Son [ɔ̃] (on / om)</span>
+                                    <span class="text-xs text-slate-500">Exemple : Le bonbon, la maison</span>
+                                </div>
+                                <button onclick="speakText('Le bonbon dans la maison')" class="px-3 py-1.5 bg-french-gold text-french-blue font-bold rounded-md text-xs hover:bg-yellow-400">
+                                    <i class="fa-solid fa-volume-high"></i> Écouter
+                                </button>
+                            </div>
+
+                            <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-sm block">3. Son [ɛ̃] (in / ein / ain)</span>
+                                    <span class="text-xs text-slate-500">Exemple : Le vin, le matin, le pain</span>
+                                </div>
+                                <button onclick="speakText('Du bon vin et du pain le matin')" class="px-3 py-1.5 bg-french-gold text-french-blue font-bold rounded-md text-xs hover:bg-yellow-400">
+                                    <i class="fa-solid fa-volume-high"></i> Écouter
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- French R & Silent Letters Block -->
+                    <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-700 space-y-4">
+                        <h3 class="font-serif font-bold text-lg text-french-navy dark:text-french-gold flex items-center gap-2">
+                            <i class="fa-solid fa-comment-dots"></i> Le 'R' Guttural & Lettres Muettes
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-sm block">Le 'R' français [ʁ]</span>
+                                    <span class="text-xs text-slate-500">Exemple : Paris, la rue, la tour</span>
+                                </div>
+                                <button onclick="speakText('Paris, la rue, la tour Eiffel')" class="px-3 py-1.5 bg-french-gold text-french-blue font-bold rounded-md text-xs hover:bg-yellow-400">
+                                    <i class="fa-solid fa-volume-high"></i> Écouter
+                                </button>
+                            </div>
+
+                            <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-sm block">La Liaison Obligatoire</span>
+                                    <span class="text-xs text-slate-500">Exemple : Les‿amis, vous‿avez</span>
+                                </div>
+                                <button onclick="speakText('Les amis vous avez raison')" class="px-3 py-1.5 bg-french-gold text-french-blue font-bold rounded-md text-xs hover:bg-yellow-400">
+                                    <i class="fa-solid fa-volume-high"></i> Écouter
+                                </button>
+                            </div>
+
+                            <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-sm block">L'E Muet Final</span>
+                                    <span class="text-xs text-slate-500">Exemple : La porte, la table</span>
+                                </div>
+                                <button onclick="speakText('La porte et la grande table')" class="px-3 py-1.5 bg-french-gold text-french-blue font-bold rounded-md text-xs hover:bg-yellow-400">
+                                    <i class="fa-solid fa-volume-high"></i> Écouter
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="view-ai-coach" class="view-panel hidden p-4 sm:p-8 space-y-6">
+                <div class="rounded-2xl bg-gradient-to-br from-[#071d2b] via-[#12354a] to-[#1b4655] text-white p-6 sm:p-9 relative overflow-hidden">
+                    <div class="absolute -right-10 -top-16 text-white/5 text-[13rem] pointer-events-none"><i class="fa-solid fa-sparkles"></i></div>
+                    <div class="relative max-w-3xl">
+                        <span class="text-xs uppercase tracking-[.2em] text-amber-300 font-bold">Your personal language partner</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-2">Meet your AI French coach</h2>
+                        <p class="text-slate-200 mt-3 max-w-2xl">Ask for a grammar explanation, get gentle corrections, or practise a real conversation. Choose the language you want explanations in.</p>
+                    </div>
+                </div>
+                <div class="grid lg:grid-cols-[minmax(0,1fr)_280px] gap-5 items-start">
+                    <div class="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+                        <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center"><i class="fa-solid fa-comments"></i></div><div><h3 class="font-bold text-slate-900">Practice chat</h3><p class="text-xs text-slate-500">Patient, practical, and focused on your level</p></div></div>
+                            <label class="text-xs font-semibold text-slate-600">Explain in <select id="coach-language" class="ml-1 px-2 py-1.5 rounded-lg border border-slate-200 bg-white text-slate-800"><option value="English">English</option><option value="Hindi">हिन्दी (Hindi)</option></select></label>
+                        </div>
+                        <div id="coach-messages" class="h-[360px] sm:h-[420px] overflow-y-auto p-4 sm:p-6 space-y-4 bg-[#fbfaf7]" aria-live="polite">
+                            <div class="ai-message flex gap-3"><div class="w-8 h-8 shrink-0 rounded-full bg-[#102f42] text-amber-300 flex items-center justify-center text-sm"><i class="fa-solid fa-sparkles"></i></div><div class="max-w-[88%] rounded-2xl rounded-tl-sm bg-white border border-slate-200 px-4 py-3 text-sm text-slate-700 shadow-sm">Bonjour! I’m your French practice partner. Ask me anything, or try one of the prompts to get started.</div></div>
+                        </div>
+                        <div class="px-4 sm:px-6 pb-3 flex flex-wrap gap-2"><button onclick="coachSuggestion('Explain the difference between être and avoir with simple examples.')" class="text-xs px-3 py-2 rounded-full border border-slate-200 hover:border-amber-400 hover:bg-amber-50 text-slate-600">Être vs avoir</button><button onclick="coachSuggestion('Let’s practise ordering a coffee in French. Ask me one question at a time.')" class="text-xs px-3 py-2 rounded-full border border-slate-200 hover:border-amber-400 hover:bg-amber-50 text-slate-600">Order a coffee</button><button onclick="coachSuggestion('Teach me five useful beginner French phrases with pronunciation.')" class="text-xs px-3 py-2 rounded-full border border-slate-200 hover:border-amber-400 hover:bg-amber-50 text-slate-600">Useful phrases</button></div>
+                        <form id="coach-form" onsubmit="sendCoachMessage(event)" class="p-4 sm:px-6 sm:pb-6 flex gap-2 border-t border-slate-100">
+                            <label for="coach-input" class="sr-only">Ask your French coach</label><textarea id="coach-input" rows="1" maxlength="1200" placeholder="Ask a question or write a sentence in French…" class="flex-1 resize-none min-h-12 max-h-32 px-4 py-3 rounded-xl border border-slate-200 focus:border-amber-400 focus:ring-2 focus:ring-amber-100 text-sm text-slate-800" required></textarea><button id="coach-send" type="submit" class="self-end w-12 h-12 rounded-xl bg-[#102f42] hover:bg-[#1b4655] text-amber-300 flex items-center justify-center transition-colors" aria-label="Send message"><i class="fa-solid fa-arrow-up"></i></button>
+                        </form>
+                    </div>
+                    <aside class="rounded-2xl bg-amber-50 border border-amber-100 p-5 space-y-3"><h3 class="font-bold text-slate-900 flex gap-2 items-center"><i class="fa-solid fa-lightbulb text-amber-600"></i> Make the most of it</h3><p class="text-sm text-slate-600 leading-relaxed">Write a little French, even if you’re unsure. Ask for one correction at a time, request an easier explanation, or practise a situation you’ll encounter in real life.</p><div class="pt-2 border-t border-amber-200 text-xs text-slate-500">Your current lesson: <strong id="coach-current-lesson" class="text-slate-700">French basics</strong></div><button onclick="switchView('lessons')" class="text-sm font-bold text-emerald-800 hover:text-emerald-950">Back to lessons <i class="fa-solid fa-arrow-right ml-1"></i></button></aside>
+                </div>
+            </section>
+
+            <section id="view-certificates" class="view-panel hidden p-4 sm:p-8 space-y-6">
+                <div>
+                    <h2 class="font-serif text-2xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-award text-french-gold"></i> Certificats d'Aptitude Linguistique
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Create a personal academy certificate to mark your progress. It is not an accredited qualification.</p>
+                </div>
+
+                <!-- Printable Certificate Graphic Card -->
+                <div id="printable-certificate" class="max-w-2xl mx-auto bg-slate-50 dark:bg-slate-900 border-8 border-french-gold/80 p-8 sm:p-12 text-center rounded-2xl shadow-2xl relative space-y-6 overflow-hidden">
+                    <!-- Subtle Background Seal Overlay -->
+                    <div class="absolute -right-10 -bottom-10 opacity-5 text-french-navy dark:text-white pointer-events-none">
+                        <i class="fa-solid fa-certificate text-9xl"></i>
+                    </div>
+
+                    <div class="space-y-1">
+                        <p class="text-xs font-serif tracking-widest uppercase text-french-gold font-bold">Votre parcours de langue française</p>
+                        <h2 class="font-serif text-2xl sm:text-4xl font-bold text-french-navy dark:text-white">L'Académie du Français</h2>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-widest">Certificat de progression de l'académie</p>
+                    </div>
+
+                    <div class="w-16 h-0.5 bg-french-gold mx-auto"></div>
+
+                    <div class="space-y-2">
+                        <p class="text-xs text-slate-500 italic">Il est certifié par la présente que :</p>
+                        <h3 id="cert-user-name" class="font-serif text-2xl sm:text-3xl font-bold text-french-gold italic underline underline-offset-8">
+                            Élève de l'Académie
+                        </h3>
+                    </div>
+
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-md mx-auto leading-relaxed">
+                        A complété avec succès le programme d'études en langue française et démontré la maîtrise des compétences grammaticales et phonétiques du <span class="font-bold text-french-navy dark:text-french-gold" id="cert-level-name">Niveau A1 - Débutant</span>.
+                    </p>
+
+                    <div class="pt-6 flex justify-between items-end border-t border-slate-200 dark:border-slate-800 text-left text-[10px] text-slate-500">
+                        <div>
+                            <p class="font-semibold text-slate-700 dark:text-slate-300">Date de délivrance :</p>
+                            <p id="cert-date">11 Octobre 2026</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-12 h-12 rounded-full border border-french-gold mx-auto flex items-center justify-center text-french-gold text-lg mb-1">
+                                <i class="fa-solid fa-ribbon"></i>
+                            </div>
+                            <span class="font-serif font-bold text-french-navy dark:text-slate-300">Sceau de l'Académie</span>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-semibold text-slate-700 dark:text-slate-300">Le Directeur des Études :</p>
+                            <p class="font-serif italic text-french-navy dark:text-french-gold text-xs">Prof. Henri de Saint-Germain</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certificate Actions -->
+                <div class="max-w-2xl mx-auto flex flex-wrap justify-center gap-4">
+                    <button onclick="window.print()" class="px-6 py-2.5 rounded-xl bg-french-navy hover:bg-slate-800 text-white font-bold text-xs flex items-center gap-2 transition-colors">
+                        <i class="fa-solid fa-print"></i> Imprimer / Télécharger le PDF
+                    </button>
+                    <button onclick="shareCertificate()" class="px-6 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-xs hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-2">
+                        <i class="fa-solid fa-share-nodes"></i> Partager mon Certificat
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="bg-french-blue text-slate-400 text-xs border-t border-slate-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+            <!-- FAQ Accordion -->
+            <div class="max-w-3xl mx-auto space-y-3">
+                <h3 class="font-serif text-lg font-bold text-white text-center mb-4">Foire Aux Questions (FAQ)</h3>
+                
+                <details class="bg-slate-800/60 rounded-xl p-4 border border-slate-700/60 group">
+                    <summary class="font-semibold text-slate-200 cursor-pointer flex justify-between items-center">
+                        <span>Comment fonctionne la méthode L'Académie du Français ?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
+                    </summary>
+                    <p class="mt-2 text-slate-400 leading-relaxed">
+                        Notre approche s'inspire du format structuré de W3Schools : chaque leçon présente d'abord une règle claire, suivie d'exemples audio vivants et d'un éditeur interactif "Try It" où vous mettez immédiatement en pratique ce que vous apprenez.
+                    </p>
+                </details>
+
+                <details class="bg-slate-800/60 rounded-xl p-4 border border-slate-700/60 group">
+                    <summary class="font-semibold text-slate-200 cursor-pointer flex justify-between items-center">
+                        <span>Que représente le certificat ?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
+                    </summary>
+                    <p class="mt-2 text-slate-400 leading-relaxed">
+                        Vous pouvez imprimer un certificat personnel de progression. Il célèbre votre apprentissage, mais ne constitue pas une qualification accréditée.
+                    </p>
+                </details>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-between border-t border-slate-800 pt-6 gap-4">
+                <p>© 2026 L'Académie du Français. Tous droits réservés.</p>
+                <div class="flex space-x-6 text-slate-400">
+                    <a href="#" class="hover:text-french-gold"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="hover:text-french-gold"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="hover:text-french-gold"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-french-gold"><i class="fa-brands fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="auth-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 sm:p-8 space-y-6 shadow-2xl border border-french-gold/30 relative">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="text-center space-y-2">
+                <div class="w-12 h-12 rounded-full bg-french-gold/20 text-french-gold mx-auto flex items-center justify-center text-xl font-serif font-bold">
+                    A
+                </div>
+                <h3 id="auth-modal-title" class="font-serif text-2xl font-bold">Espace Étudiant</h3>
+                <p class="text-xs text-slate-500">Save a learner profile on this device. Cross-device accounts are not enabled yet.</p>
+            </div>
+
+            <form onsubmit="handleAuthSubmit(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Votre Nom / Pseudonyme :</label>
+                    <input type="text" id="auth-input-name" required placeholder="ex: Jean Dupont" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:border-french-gold">
+                </div>
+                <div>
+                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Adresse Email :</label>
+                    <input type="email" id="auth-input-email" required placeholder="eleve@academie.fr" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:border-french-gold">
+                </div>
+                <button type="submit" class="w-full py-2.5 bg-french-navy hover:bg-slate-800 text-white font-bold rounded-lg transition-colors">
+                    Enregistrer / Se Connecter
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-2 pointer-events-none"></div>
+
+    <script>
+        /* ==========================================================================
+           L'Académie du Français - Local Storage Database & Curriculum Data
+           ========================================================================== */
+        
+        // Curriculum Database
+        const CURRICULUM = {
+            "a1-present": {
+                id: "a1-present",
+                level: "A1",
+                category: "Grammaire",
+                title: "French Grammar - Le Présent de l'Indicatif",
+                subtitle: "Conjugating regular -ER verbs and essential irregulars (Être, Avoir)",
+                summary: "In French, the present tense (Le Présent) expresses current actions and general truths. Master regular -ER endings and the core auxiliary verbs.",
+                contentHtml: `
+                    <div class="space-y-6">
+                        <p class="text-sm leading-relaxed">
+                            The present tense in French is used to describe actions happening right now, habitual actions, or general facts. Unlike English, French does not have a separate continuous form (e.g. "I am eating" is simply "Je mange").
+                        </p>
+
+                        <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 space-y-2">
+                            <h4 class="font-serif font-bold text-amber-900 dark:text-amber-300 flex items-center gap-2">
+                                <i class="fa-solid fa-star"></i> Core Verbs: Être (To Be) & Avoir (To Have)
+                            </h4>
+                            <p class="text-xs text-amber-800 dark:text-amber-200">These two irregular verbs form the foundation of French grammar:</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-xs">
+                                <div class="bg-white dark:bg-slate-800 p-3 rounded-lg border">
+                                    <span class="font-bold text-french-navy dark:text-french-gold block mb-1">Être (To Be)</span>
+                                    <ul class="space-y-1 font-mono">
+                                        <li>Je suis <button onclick="speakText('Je suis')" class="text-french-gold"><i class="fa-solid fa-volume-high text-xs"></i></button></li>
+                                        <li>Tu es</li>
+                                        <li>Il / Elle est</li>
+                                        <li>Nous sommes</li>
+                                        <li>Vous êtes</li>
+                                        <li>Ils / Elles sont</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white dark:bg-slate-800 p-3 rounded-lg border">
+                                    <span class="font-bold text-french-navy dark:text-french-gold block mb-1">Avoir (To Have)</span>
+                                    <ul class="space-y-1 font-mono">
+                                        <li>J'ai <button onclick="speakText('J\'ai')" class="text-french-gold"><i class="fa-solid fa-volume-high text-xs"></i></button></li>
+                                        <li>Tu as</li>
+                                        <li>Il / Elle a</li>
+                                        <li>Nous avons</li>
+                                        <li>Vous avez</li>
+                                        <li>Ils / Elles ont</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- W3Schools Style Try It Yourself Block -->
+                        <div class="p-5 rounded-xl bg-slate-900 text-white space-y-3">
+                            <div class="flex justify-between items-center text-xs text-french-gold font-bold">
+                                <span><i class="fa-solid fa-code"></i> EXEMPLE INTERACTIF</span>
+                                <span>Try It Yourself</span>
+                            </div>
+                            <p class="text-xs text-slate-300">Test translation: "We are at the Parisian café and we have a coffee."</p>
+                            <div class="p-3 bg-slate-950 rounded-lg font-mono text-xs text-emerald-400">
+                                Nous sommes au café parisien et nous avons un café.
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="speakText('Nous sommes au café parisien et nous avons un café.')" class="px-3 py-1.5 bg-french-gold text-french-blue font-bold rounded text-xs">
+                                    <i class="fa-solid fa-volume-high"></i> Écouter
+                                </button>
+                                <button onclick="switchView('playground')" class="px-3 py-1.5 bg-slate-800 text-slate-200 rounded text-xs hover:bg-slate-700">
+                                    Ouvrir dans l'Éditeur
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            "a1-articles": {
+                id: "a1-articles",
+                level: "A1",
+                category: "Grammaire",
+                title: "Definite & Indefinite Articles (Le, La, L', Un, Une)",
+                subtitle: "Mastering noun genders and essential French articles",
+                summary: "Every noun in French has a grammatical gender (masculine or feminine). Learn how articles change accordingly.",
+                contentHtml: `
+                    <div class="space-y-6">
+                        <p class="text-sm leading-relaxed">
+                            In French, nouns are always accompanied by an article that matches the gender and number of the noun.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                            <div class="p-4 rounded-xl border bg-slate-50 dark:bg-slate-800">
+                                <h4 class="font-bold text-french-navy dark:text-french-gold mb-2">Articles Définis (The)</h4>
+                                <ul class="space-y-1 font-mono">
+                                    <li><strong>Le</strong> garçon (Masculine singular)</li>
+                                    <li><strong>La</strong> fille (Feminine singular)</li>
+                                    <li><strong>L'</strong>ami (Before vowel/h)</li>
+                                    <li><strong>Les</strong> étudiants (Plural)</li>
+                                </ul>
+                            </div>
+                            <div class="p-4 rounded-xl border bg-slate-50 dark:bg-slate-800">
+                                <h4 class="font-bold text-french-navy dark:text-french-gold mb-2">Articles Indéfinis (A / An / Some)</h4>
+                                <ul class="space-y-1 font-mono">
+                                    <li><strong>Un</strong> croissant (Masculine)</li>
+                                    <li><strong>Une</strong> baguette (Feminine)</li>
+                                    <li><strong>Des</strong> croissants (Plural)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            "a2-passe": {
+                id: "a2-passe",
+                level: "A2",
+                category: "Grammaire",
+                title: "Passé Composé vs Imparfait",
+                subtitle: "Narrating past events with clarity and accuracy",
+                summary: "Understand when to use Passé Composé for completed past actions versus Imparfait for ongoing descriptions.",
+                contentHtml: `
+                    <div class="space-y-6">
+                        <p class="text-sm leading-relaxed">
+                            Distinguishing Passé Composé from Imparfait is one of the key milestones in intermediate French.
+                        </p>
+                        <div class="p-4 rounded-xl bg-blue-50 dark:bg-slate-800 border border-blue-200 dark:border-slate-700 text-xs space-y-2">
+                            <h4 class="font-bold text-french-navy dark:text-french-gold">Rule of Thumb:</h4>
+                            <p><strong>Passé Composé:</strong> Specific completed action at a definite time. (e.g. <em>Hier, j'ai visité le musée du Louvre.</em>)</p>
+                            <p><strong>Imparfait:</strong> Ongoing background state, habit, or description in the past. (e.g. <em>Il faisait beau et j'avais dix ans.</em>)</p>
+                        </div>
+                    </div>
+                `
+            },
+            "b2-subjonctif": {
+                id: "b2-subjonctif",
+                level: "B2",
+                category: "Grammaire Avancée",
+                title: "Le Subjonctif Présent",
+                subtitle: "Expressing desire, doubt, emotion, and necessity",
+                summary: "The subjunctive mood is essential for nuanced French speech. Triggered by specific expressions like 'Il faut que...'",
+                contentHtml: `
+                    <div class="space-y-6">
+                        <p class="text-sm leading-relaxed">
+                            Unlike the indicative mood, the French subjunctive expresses subjectivity, uncertainty, or obligation.
+                        </p>
+                        <div class="p-4 bg-slate-900 text-white rounded-xl font-mono text-xs space-y-2">
+                            <span class="text-french-gold font-bold">// Key Trigger Phrases:</span>
+                            <p>• Il faut que tu <strong>fasses</strong> attention.</p>
+                            <p>• Je veux que vous <strong>soyez</strong> heureux.</p>
+                            <p>• Bien que ce <strong>soit</strong> difficile, nous réussirons.</p>
+                        </div>
+                    </div>
+                `
+            },
+            "a1-greetings": {
+                id: "a1-greetings", level: "A1", category: "Premiers pas", title: "Greetings & Introductions",
+                subtitle: "Say hello, introduce yourself, and ask someone’s name",
+                summary: "Build your first conversation with simple greetings, polite phrases, and the verbs s’appeler and être.",
+                contentHtml: `<div class="space-y-4 lesson-prose"><p><strong>Bonjour</strong> means hello or good morning. Use <strong>Bonsoir</strong> in the evening and <strong>Salut</strong> with friends.</p><div class="rounded-xl bg-amber-50 border border-amber-200 p-4 space-y-2"><p><strong>Bonjour, je m’appelle Maya.</strong> — Hello, my name is Maya.</p><p><strong>Comment vous appelez-vous ?</strong> — What is your name? (polite)</p><p><strong>Enchantée !</strong> — Nice to meet you! (speaker identifies as feminine)</p></div><p><span class="font-bold">Hindi:</span> “Je m’appelle Maya” का अर्थ है “मेरा नाम माया है।”</p><button onclick="speakText('Bonjour, je m’appelle Maya. Enchantée !')" class="px-4 py-2 rounded-lg bg-french-navy text-white text-sm"><i class="fa-solid fa-volume-high mr-2"></i>Listen</button></div>`
+            },
+            "a1-negation": {
+                id: "a1-negation", level: "A1", category: "Grammaire", title: "Make a Sentence Negative",
+                subtitle: "Use ne…pas to say “not” in French",
+                summary: "Place ne before the conjugated verb and pas after it. In everyday speech, ne is often dropped, but learn the complete written form first.",
+                contentHtml: `<div class="space-y-4 lesson-prose"><p>Wrap the conjugated verb with <strong>ne … pas</strong>.</p><div class="rounded-xl bg-slate-50 border p-4 space-y-2 font-mono"><p>Je parle français. → Je <strong>ne</strong> parle <strong>pas</strong> français.</p><p>Elle est prête. → Elle <strong>n’</strong>est <strong>pas</strong> prête.</p></div><p>Use <strong>n’</strong> before a vowel sound. Hindi: “Je ne parle pas” = “मैं नहीं बोलता/बोलती।”</p></div>`
+            },
+            "a2-future": {
+                id: "a2-future", level: "A2", category: "Grammaire", title: "Talk About the Future",
+                subtitle: "Use aller + infinitive for near-future plans",
+                summary: "The futur proche is formed with the present tense of aller followed by an infinitive.",
+                contentHtml: `<div class="space-y-4 lesson-prose"><p>Conjugate <strong>aller</strong>, then keep the next verb in the infinitive.</p><div class="rounded-xl bg-blue-50 border border-blue-200 p-4 space-y-2"><p><strong>Je vais étudier</strong> ce soir. — I’m going to study tonight.</p><p><strong>Nous allons visiter</strong> Lyon. — We’re going to visit Lyon.</p><p><strong>Ils vont prendre</strong> le train. — They’re going to take the train.</p></div><p>Hindi: <em>Je vais étudier</em> का अर्थ है “मैं पढ़ने वाला/वाली हूँ।”</p></div>`
+            },
+            "b1-relative": {
+                id: "b1-relative", level: "B1", category: "Grammaire", title: "Relative Pronouns: qui & que",
+                subtitle: "Connect ideas without repeating a noun",
+                summary: "Use qui as the subject of the following verb and que as its direct object.",
+                contentHtml: `<div class="space-y-4 lesson-prose"><div class="rounded-xl bg-slate-50 border p-4 space-y-2"><p><strong>qui</strong> = who / which, and it does the action: <em>La femme qui parle est ma professeure.</em></p><p><strong>que</strong> = whom / which, and it receives the action: <em>Le livre que je lis est intéressant.</em></p></div><p>Tip: the verb comes straight after <strong>qui</strong>. After <strong>que</strong>, look for a new subject.</p><p><span class="font-bold">Hindi:</span> “qui” के बाद क्रिया आती है; “que” के बाद कर्ता आता है।</p></div>`
+            },
+            "b2-conditional": {
+                id: "b2-conditional", level: "B2", category: "Grammaire avancée", title: "The Conditional Mood",
+                subtitle: "Make polite requests and imagined situations",
+                summary: "Learn the conditional present for courteous requests and the si + imparfait pattern for hypothetical situations.",
+                contentHtml: `<div class="space-y-4 lesson-prose"><p>Use the conditional to sound more polite: <strong>Je voudrais un café, s’il vous plaît.</strong> — I would like a coffee, please.</p><div class="rounded-xl bg-violet-50 border border-violet-200 p-4 space-y-2"><p><strong>Si j’avais le temps, je voyagerais.</strong></p><p>If I had the time, I would travel.</p></div><p>Pattern: <strong>si + imparfait</strong>, then <strong>conditional</strong>. Do not put the conditional directly after si.</p></div>`
+            },
+            "c1-connectors": {
+                id: "c1-connectors", level: "C1", category: "Expression avancée", title: "Build a Nuanced Argument",
+                subtitle: "Connect and qualify ideas with precision",
+                summary: "Use formal connectors to contrast, concede, and draw conclusions in essays and presentations.",
+                contentHtml: `<div class="space-y-4 lesson-prose"><div class="grid sm:grid-cols-2 gap-3"><div class="rounded-xl border p-4"><strong>Cependant / toutefois</strong><p>however / nevertheless</p></div><div class="rounded-xl border p-4"><strong>Bien que + subjonctif</strong><p>although / even though</p></div><div class="rounded-xl border p-4"><strong>En revanche</strong><p>by contrast / on the other hand</p></div><div class="rounded-xl border p-4"><strong>Dès lors</strong><p>from then on / consequently</p></div></div><p>Example: <em>Bien que cette solution soit coûteuse, elle pourrait réduire les délais.</em> — Although this solution is expensive, it could reduce delays.</p><p>For an advanced argument, state your claim, acknowledge a limitation, then support the conclusion with evidence.</p></div>`
+            }
+        };
+
+        // Flashcards Database
+        const FLASHCARDS = [
+            { id: 1, level: "A1", french: "Bonjour", phonetic: "[bɔ̃ʒuʁ]", english: "Hello / Good morning", example: "Bonjour! Comment allez-vous aujourd'hui?" },
+            { id: 2, level: "A1", french: "S'il vous plaît", phonetic: "[sil vu plɛ]", english: "Please (formal)", example: "Un café s'il vous plaît." },
+            { id: 3, level: "A1", french: "Merci beaucoup", phonetic: "[mɛʁsi boku]", english: "Thank you very much", example: "Merci beaucoup pour votre aide!" },
+            { id: 4, level: "A2", french: "Aujourd'hui", phonetic: "[oʒuʁdɥi]", english: "Today", example: "Aujourd'hui, il fait très beau à Paris." },
+            { id: 5, level: "A2", french: "Délicieux", phonetic: "[delisjø]", english: "Delicious", example: "Ce croissant au beurre est délicieux." },
+            { id: 6, level: "B1", french: "Cependant", phonetic: "[səpɑ̃dɑ̃]", english: "However / Nevertheless", example: "Il pleut, cependant nous nous promenons." }
+        ];
+
+        // Quiz Questions Database
+        const QUIZ_QUESTIONS = [
+            {
+                id: 1,
+                question: "Quelle est la forme correcte du verbe 'Être' avec 'Nous' ?",
+                options: ["Nous êtes", "Nous sommes", "Nous avons", "Nous sont"],
+                correct: 1,
+                explanation: "Au présent de l'indicatif, la première personne du pluriel du verbe être est 'Nous sommes'."
+            },
+            {
+                id: 2,
+                question: "Choisissez l'article défini approprié pour '___ église' :",
+                options: ["Le", "La", "L'", "Les"],
+                correct: 2,
+                explanation: "Devant un nom singulier commençant par une voyelle, 'Le' ou 'La' devient 'L''."
+            },
+            {
+                id: 3,
+                question: "Quelle phrase exprime une action complétée au passé (Passé Composé) ?",
+                options: ["J'étais à la maison.", "J'ai mangé une pomme.", "Je mangeais souvent.", "Je mangerai demain."],
+                correct: 1,
+                explanation: "'J'ai mangé' utilise l'auxiliaire avoir au présent + participe passé, indiquant un événement précis et terminé."
+            }
+        ];
+
+        // App State Engine
+        let state = {
+            currentUser: JSON.parse(localStorage.getItem('academie_user')) || null,
+            progress: JSON.parse(localStorage.getItem('academie_progress')) || {
+                completedLessons: [],
+                masteredFlashcards: [],
+                quizScores: [],
+                bookmarks: [],
+                streak: 1
+            },
+            currentLessonId: "a1-present",
+            currentFcIndex: 0,
+            activeFcList: [...FLASHCARDS],
+            fcFlipped: false,
+            quizState: {
+                active: false,
+                type: 'quick',
+                currentIndex: 0,
+                score: 0,
+                questions: []
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initApp();
+        });
+
+        function initApp() {
+            updateUserUI();
+            updateStatsUI();
+            renderSidebar();
+            loadLesson(state.currentLessonId);
+            updateFlashcardUI();
+        }
+
+        // View Navigation Switcher
+        function switchView(viewName) {
+            document.querySelectorAll('.view-panel').forEach(panel => panel.classList.add('hidden'));
+            const targetView = document.getElementById(`view-${viewName}`);
+            if (targetView) targetView.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                if (tab.dataset.tab === viewName) {
+                    tab.classList.add('bg-slate-800', 'text-white', 'font-bold');
+                } else {
+                    tab.classList.remove('bg-slate-800', 'text-white', 'font-bold');
+                }
+            });
+
+            // Close mobile menu if open
+            const sidebar = document.getElementById('app-sidebar');
+            sidebar.classList.add('-translate-x-full');
+        }
+
+        // Sidebar Navigation Generator
+        function renderSidebar() {
+            const container = document.getElementById('sidebar-nav-content');
+            let html = '';
+            ['A1', 'A2', 'B1', 'B2', 'C1'].forEach(level => {
+                const lessons = Object.entries(CURRICULUM).filter(([, item]) => item.level === level);
+                if (!lessons.length) return;
+                html += `<div class="space-y-1"><span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-2 pt-2">${level} ${({A1: 'Débutant', A2: 'Élémentaire', B1: 'Intermédiaire', B2: 'Avancé', C1: 'Autonome'})[level]}</span>`;
+                lessons.forEach(([key, item]) => {
+                    const isCompleted = state.progress.completedLessons.includes(key);
+                    const isActive = state.currentLessonId === key;
+                    html += `<button onclick="loadLesson('${key}'); switchView('lessons');" class="w-full text-left px-3 py-2 rounded-lg flex items-center justify-between transition-colors ${isActive ? 'bg-french-navy text-white font-semibold' : 'hover:bg-slate-100 dark:hover:bg-slate-700/50 text-slate-700 dark:text-slate-300'}"><span class="truncate flex items-center gap-2"><i class="fa-solid ${isCompleted ? 'fa-circle-check text-emerald-500' : 'fa-circle text-slate-300 dark:text-slate-600'} text-xs"></i><span class="text-xs">${item.title.replace('French Grammar - ', '')}</span></span><span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400">${item.level}</span></button>`;
+                });
+                html += '</div>';
+            });
+            container.innerHTML = html;
+        }
+
+        // Load Lesson into Main Panel
+        function loadLesson(lessonId) {
+            const lesson = CURRICULUM[lessonId] || CURRICULUM["a1-present"];
+            state.currentLessonId = lesson.id;
+            const coachLesson = document.getElementById('coach-current-lesson');
+            if (coachLesson) coachLesson.innerText = lesson.title;
+
+            document.getElementById('lesson-level-badge').innerText = lesson.level;
+            document.getElementById('lesson-category-text').innerText = lesson.category;
+
+            const isBookmarked = state.progress.bookmarks.includes(lesson.id);
+            const bookmarkBtn = document.getElementById('bookmark-btn');
+            bookmarkBtn.innerHTML = `<i class="${isBookmarked ? 'fa-solid' : 'fa-regular'} fa-bookmark ${isBookmarked ? 'text-french-gold' : ''}"></i>`;
+
+            const lessonBody = document.getElementById('lesson-body');
+            lessonBody.innerHTML = `
+                <div class="space-y-3">
+                    <h1 class="font-serif text-2xl sm:text-4xl font-bold text-slate-900 dark:text-white">${lesson.title}</h1>
+                    <p class="text-sm font-medium text-french-navy dark:text-french-gold">${lesson.subtitle}</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/30 border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                    <strong>Résumé de la leçon :</strong> ${lesson.summary}
+                </div>
+                ${lesson.contentHtml}
+            `;
+
+            renderSidebar();
+        }
+
+        // Toggle Bookmark
+        function toggleBookmarkCurrentLesson() {
+            const id = state.currentLessonId;
+            const idx = state.progress.bookmarks.indexOf(id);
+            if (idx > -1) {
+                state.progress.bookmarks.splice(idx, 1);
+                showToast("Leçon retirée des favoris", "info");
+            } else {
+                state.progress.bookmarks.push(id);
+                showToast("Leçon ajoutée aux favoris", "success");
+            }
+            saveState();
+            loadLesson(id);
+        }
+
+        // Mark Lesson Complete
+        function markLessonComplete() {
+            if (!state.progress.completedLessons.includes(state.currentLessonId)) {
+                state.progress.completedLessons.push(state.currentLessonId);
+                showToast("Bravo ! Leçon marquée comme terminée", "success");
+                saveState();
+                updateStatsUI();
+                renderSidebar();
+            }
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Stop ongoing audio
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'fr-FR';
+
+                const rate = document.getElementById('speech-rate') ? parseFloat(document.getElementById('speech-rate').value) : 0.9;
+                const pitch = document.getElementById('speech-pitch') ? parseFloat(document.getElementById('speech-pitch').value) : 1.0;
+
+                utterance.rate = rate;
+                utterance.pitch = pitch;
+
+                window.speechSynthesis.speak(utterance);
+            } else {
+                showToast("Synthèse vocale non supportée par votre navigateur", "error");
+            }
+        }
+
+        function testAudioSettings() {
+            speakText("Bonjour et bienvenue à L'Académie du Français. La synthèse vocale fonctionne parfaitement.");
+        }
+
+        function insertSpecialChar(char) {
+            const input = document.getElementById('playground-input');
+            input.value += char;
+            input.focus();
+        }
+
+        function loadPlaygroundPrompt() {
+            const val = document.getElementById('playground-prompt-select').value;
+            const input = document.getElementById('playground-input');
+            if (val === '1') {
+                input.value = "J'apprends le français à l'académie.";
+            } else if (val === '2') {
+                input.value = "J'ai, tu as, il a, nous avons, vous avez, ils ont.";
+            } else if (val === '3') {
+                input.value = "Je suis allé au café hier soir.";
+            } else {
+                input.value = "";
+            }
+        }
+
+        function clearPlayground() {
+            document.getElementById('playground-input').value = "";
+            document.getElementById('playground-feedback').innerHTML = `
+                <i class="fa-solid fa-lightbulb text-3xl text-amber-400 mb-2"></i>
+                <p class="text-sm font-medium text-slate-600 dark:text-slate-300">
+                    Saisissez un texte pour tester l'analyse et l'audio !
+                </p>
+            `;
+        }
+
+        function evaluatePlayground() {
+            const text = document.getElementById('playground-input').value.trim();
+            const feedback = document.getElementById('playground-feedback');
+
+            if (!text) {
+                showToast("Veuillez d'abord saisir un texte en français", "error");
+                return;
+            }
+
+            const wordCount = text.split(/\s+/).length;
+            const hasAccents = /[éèàçêëîïôûù]/i.test(text);
+
+            feedback.innerHTML = `
+                <div class="text-left space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                            <i class="fa-solid fa-check-circle"></i> Analyse effectuée avec succès
+                        </span>
+                        <span class="text-[10px] bg-slate-200 dark:bg-slate-700 px-2 py-0.5 rounded">${wordCount} mots</span>
+                    </div>
+
+                    <p class="text-xs text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 p-3 rounded-lg border font-mono">
+                        "${text}"
+                    </p>
+
+                    <div class="text-xs space-y-1 text-slate-600 dark:text-slate-400">
+                        <p>• <strong>Détection des accents :</strong> ${hasAccents ? 'Accents français détectés ✓' : 'Aucun accent détecté'}</p>
+                        <p>• <strong>Score de syntaxe :</strong> Excellent alignement grammatical.</p>
+                    </div>
+                </div>
+            `;
+            showToast("Texte analysé !", "success");
+        }
+
+        function speakPlaygroundText() {
+            const text = document.getElementById('playground-input').value.trim();
+            if (text) {
+                speakText(text);
+            } else {
+                showToast("Rien à lire dans l'éditeur", "info");
+            }
+        }
+
+        const coachHistory = [];
+        function coachSuggestion(text) {
+            document.getElementById('coach-input').value = text;
+            document.getElementById('coach-input').focus();
+        }
+        function addCoachMessage(text, role) {
+            const list = document.getElementById('coach-messages');
+            const row = document.createElement('div');
+            row.className = `ai-message flex gap-3 ${role === 'user' ? 'justify-end' : ''}`;
+            const bubble = document.createElement('div');
+            bubble.className = role === 'user'
+                ? 'max-w-[88%] rounded-2xl rounded-tr-sm bg-[#102f42] px-4 py-3 text-sm text-white shadow-sm whitespace-pre-wrap'
+                : 'max-w-[88%] rounded-2xl rounded-tl-sm bg-white border border-slate-200 px-4 py-3 text-sm text-slate-700 shadow-sm whitespace-pre-wrap';
+            bubble.textContent = text;
+            if (role !== 'user') {
+                const icon = document.createElement('div');
+                icon.className = 'w-8 h-8 shrink-0 rounded-full bg-[#102f42] text-amber-300 flex items-center justify-center text-sm';
+                icon.innerHTML = '<i class="fa-solid fa-sparkles" aria-hidden="true"></i>';
+                row.append(icon, bubble);
+            } else row.append(bubble);
+            list.appendChild(row);
+            list.scrollTop = list.scrollHeight;
+            return row;
+        }
+        async function sendCoachMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('coach-input');
+            const button = document.getElementById('coach-send');
+            const message = input.value.trim();
+            if (!message || button.disabled) return;
+            input.value = '';
+            addCoachMessage(message, 'user');
+            coachHistory.push({ role: 'user', content: message });
+            const pending = addCoachMessage('Thinking…', 'assistant');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
+            try {
+                const response = await fetch('/api/coach', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        language: document.getElementById('coach-language').value,
+                        lesson: state.currentLessonId ? (CURRICULUM[state.currentLessonId]?.title || state.currentLessonId) : 'French basics',
+                        messages: coachHistory.slice(-10)
+                    })
+                });
+                const data = await response.json().catch(() => ({}));
+                if (!response.ok) throw new Error(data.error || 'The coach is unavailable right now. Please try again.');
+                pending.querySelector('div:last-child').textContent = data.reply;
+                coachHistory.push({ role: 'assistant', content: data.reply });
+            } catch (error) {
+                pending.querySelector('div:last-child').textContent = error.message.includes('Failed to fetch')
+                    ? 'I can connect when the school website is running with its server. Start it with “npm start”, then refresh this page.'
+                    : error.message;
+                coachHistory.pop();
+            } finally {
+                button.disabled = false;
+                button.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
+                input.focus();
+            }
+        }
+
+        function filterFlashcards(level) {
+            if (level === 'all') {
+                state.activeFcList = [...FLASHCARDS];
+            } else {
+                state.activeFcList = FLASHCARDS.filter(c => c.level === level);
+            }
+            state.currentFcIndex = 0;
+            updateFlashcardUI();
+        }
+
+        function updateFlashcardUI() {
+            if (state.activeFcList.length === 0) return;
+            const card = state.activeFcList[state.currentFcIndex];
+
+            document.getElementById('fc-current-index').innerText = state.currentFcIndex + 1;
+            document.getElementById('fc-total-count').innerText = state.activeFcList.length;
+            document.getElementById('fc-mastered-count').innerText = state.progress.masteredFlashcards.length;
+
+            document.getElementById('fc-badge-level').innerText = card.level;
+            document.getElementById('fc-french-text').innerText = card.french;
+            document.getElementById('fc-phonetic-text').innerText = card.phonetic;
+            document.getElementById('fc-english-text').innerText = card.english;
+            document.getElementById('fc-example-text').innerText = card.example;
+
+            // Reset flip position
+            state.fcFlipped = false;
+            document.getElementById('flashcard-inner').classList.remove('rotate-y-180');
+        }
+
+        function flipFlashcard() {
+            state.fcFlipped = !state.fcFlipped;
+            const inner = document.getElementById('flashcard-inner');
+            if (state.fcFlipped) {
+                inner.classList.add('rotate-y-180');
+            } else {
+                inner.classList.remove('rotate-y-180');
+            }
+        }
+
+        function nextFlashcard() {
+            state.currentFcIndex = (state.currentFcIndex + 1) % state.activeFcList.length;
+            updateFlashcardUI();
+        }
+
+        function prevFlashcard() {
+            state.currentFcIndex = (state.currentFcIndex - 1 + state.activeFcList.length) % state.activeFcList.length;
+            updateFlashcardUI();
+        }
+
+        function shuffleFlashcards() {
+            state.activeFcList.sort(() => Math.random() - 0.5);
+            state.currentFcIndex = 0;
+            updateFlashcardUI();
+            showToast("Cartes mélangées !", "info");
+        }
+
+        function markFlashcardMastery(isMastered) {
+            const card = state.activeFcList[state.currentFcIndex];
+            if (isMastered) {
+                if (!state.progress.masteredFlashcards.includes(card.id)) {
+                    state.progress.masteredFlashcards.push(card.id);
+                    saveState();
+                    updateStatsUI();
+                    showToast("Mot ajouté aux maîtrises !", "success");
+                }
+            }
+            nextFlashcard();
+        }
+
+        function startQuiz(type) {
+            state.quizState.active = true;
+            state.quizState.type = type;
+            state.quizState.currentIndex = 0;
+            state.quizState.score = 0;
+            state.quizState.questions = type === 'quick' ? QUIZ_QUESTIONS.slice(0, 3) : [...QUIZ_QUESTIONS];
+
+            document.getElementById('quiz-selection-container').classList.add('hidden');
+            document.getElementById('quiz-result-container').classList.add('hidden');
+            document.getElementById('quiz-active-container').classList.remove('hidden');
+
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            const q = state.quizState.questions[state.quizState.currentIndex];
+            const total = state.quizState.questions.length;
+
+            document.getElementById('quiz-progress-text').innerText = `Question ${state.quizState.currentIndex + 1} sur ${total}`;
+            document.getElementById('quiz-score-live').innerText = `Score: ${state.quizState.score}`;
+            document.getElementById('quiz-progress-bar').style.width = `${((state.quizState.currentIndex + 1) / total) * 100}%`;
+
+            document.getElementById('quiz-question-title').innerText = q.question;
+            document.getElementById('quiz-explanation-box').classList.add('hidden');
+            document.getElementById('quiz-next-btn').classList.add('hidden');
+
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/50 hover:border-french-gold transition-all text-xs sm:text-sm font-medium flex items-center justify-between group";
+                btn.onclick = () => submitQuizAnswer(idx);
+                btn.innerHTML = `
+                    <span>${opt}</span>
+                    <i class="fa-regular fa-circle text-slate-300 group-hover:text-french-gold"></i>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function submitQuizAnswer(selectedIdx) {
+            const q = state.quizState.questions[state.quizState.currentIndex];
+            const optionsContainer = document.getElementById('quiz-options-container');
+            const explanationBox = document.getElementById('quiz-explanation-box');
+
+            // Disable all option buttons
+            Array.from(optionsContainer.children).forEach((btn, idx) => {
+                btn.onclick = null;
+                if (idx === q.correct) {
+                    btn.classList.add('bg-emerald-100', 'dark:bg-emerald-900/40', 'border-emerald-500', 'text-emerald-900', 'dark:text-emerald-200');
+                } else if (idx === selectedIdx) {
+                    btn.classList.add('bg-red-100', 'dark:bg-red-900/40', 'border-red-500', 'text-red-900', 'dark:text-red-200');
+                }
+            });
+
+            if (selectedIdx === q.correct) {
+                state.quizState.score++;
+                explanationBox.className = "p-4 rounded-xl text-xs space-y-1 border bg-emerald-50 dark:bg-emerald-950/30 border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200";
+                explanationBox.innerHTML = `<strong>Correct !</strong> ${q.explanation}`;
+            } else {
+                explanationBox.className = "p-4 rounded-xl text-xs space-y-1 border bg-red-50 dark:bg-red-950/30 border-red-300 dark:border-red-800 text-red-900 dark:text-red-200";
+                explanationBox.innerHTML = `<strong>Incorrect.</strong> ${q.explanation}`;
+            }
+
+            explanationBox.classList.remove('hidden');
+            document.getElementById('quiz-next-btn').classList.remove('hidden');
+        }
+
+        function nextQuizQuestion() {
+            state.quizState.currentIndex++;
+            if (state.quizState.currentIndex < state.quizState.questions.length) {
+                renderQuizQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-active-container').classList.add('hidden');
+            document.getElementById('quiz-result-container').classList.remove('hidden');
+
+            const total = state.quizState.questions.length;
+            const scorePct = Math.round((state.quizState.score / total) * 100);
+
+            document.getElementById('quiz-final-score').innerText = `${state.quizState.score} / ${total} (${scorePct}%)`;
+            state.progress.quizScores.push(scorePct);
+            saveState();
+            updateStatsUI();
+        }
+
+        function handleSearch(query) {
+            const dropdown = document.getElementById('search-results-dropdown');
+            if (!query.trim()) {
+                dropdown.classList.add('hidden');
+                return;
+            }
+
+            const results = Object.values(CURRICULUM).filter(item => 
+                item.title.toLowerCase().includes(query.toLowerCase()) || 
+                item.summary.toLowerCase().includes(query.toLowerCase())
+            );
+
+            if (results.length === 0) {
+                dropdown.innerHTML = `<div class="p-3 text-xs text-slate-500">Aucun résultat trouvé</div>`;
+            } else {
+                dropdown.innerHTML = results.map(r => `
+                    <button onclick="loadLesson('${r.id}'); switchView('lessons'); document.getElementById('search-results-dropdown').classList.add('hidden');" class="w-full text-left p-3 hover:bg-slate-100 dark:hover:bg-slate-700 border-b border-slate-100 dark:border-slate-700/50 flex flex-col">
+                        <span class="font-serif font-bold text-xs text-french-navy dark:text-french-gold">${r.title}</span>
+                        <span class="text-[10px] text-slate-500 truncate">${r.summary}</span>
+                    </button>
+                `).join('');
+            }
+            dropdown.classList.remove('hidden');
+        }
+
+        // Theme Toggle Logic
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        // Auth Modal & Profile Management
+        function openAuthModal() {
+            document.getElementById('auth-modal').classList.remove('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+        }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('auth-input-name').value;
+            const email = document.getElementById('auth-input-email').value;
+
+            state.currentUser = { name, email };
+            localStorage.setItem('academie_user', JSON.stringify(state.currentUser));
+
+            updateUserUI();
+            closeAuthModal();
+            showToast(`Bienvenue, ${name} !`, "success");
+        }
+
+        function updateUserUI() {
+            const displayBtn = document.getElementById('user-display-name');
+            const certUserName = document.getElementById('cert-user-name');
+
+            if (state.currentUser) {
+                displayBtn.innerText = state.currentUser.name;
+                if (certUserName) certUserName.innerText = state.currentUser.name;
+            } else {
+                displayBtn.innerText = "Connexion";
+                if (certUserName) certUserName.innerText = "Élève de l'Académie";
+            }
+        }
+
+        function updateStatsUI() {
+            const completedCount = state.progress.completedLessons.length;
+            const totalLessons = Object.keys(CURRICULUM).length;
+            const progressPct = Math.round((completedCount / totalLessons) * 100);
+
+            document.getElementById('stat-completed-lessons').innerText = completedCount;
+            document.getElementById('stat-cards-mastered').innerText = state.progress.masteredFlashcards.length;
+
+            const avgScore = state.progress.quizScores.length > 0
+                ? Math.round(state.progress.quizScores.reduce((a, b) => a + b, 0) / state.progress.quizScores.length)
+                : 0;
+
+            document.getElementById('stat-quiz-score').innerText = `${avgScore}%`;
+            document.getElementById('overall-progress-percent').innerText = `${progressPct}%`;
+            document.getElementById('overall-progress-bar').style.width = `${progressPct}%`;
+        }
+
+        function saveState() {
+            localStorage.setItem('academie_progress', JSON.stringify(state.progress));
+        }
+
+        function showToast(msg, type = "info") {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `p-3 rounded-xl shadow-lg text-xs font-semibold text-white flex items-center gap-2 transform transition-all duration-300 pointer-events-auto ${type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-red-600' : 'bg-french-navy'}`;
+            toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-info-circle'}"></i> ${msg}`;
+
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Mobile Sidebar Toggle Handler
+        document.getElementById('mobile-sidebar-toggle').addEventListener('click', () => {
+            const sidebar = document.getElementById('app-sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        });
+    </script>
+</body>
+</html>
